@@ -1,0 +1,22 @@
+name: test-my-app
+on:
+  push:
+    branches:
+      - master
+      - development
+  pull_request:
+    branches:
+      - master
+      - development
+jobs:
+  drive:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: subosito/flutter-action@v1
+      with:
+        channel: 'beta'
+    - run: flutter pub get
+    - run: flutter config --enable-windows-desktop
+    - run: flutter test -d windows integration_test/app_test.dart
+    - run: flutter test
